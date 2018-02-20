@@ -1,0 +1,12 @@
+DMN\aMPFC
+%ExecuContr\L.Parietal
+DMN\PCC
+ExecuContr\DMPFC
+%DMN\R.LatP
+%ExecuContr\R.Parietal
+%Sensorimotor\SMA
+%Auditory\R.A1
+%ExecuContr\R.PFC
+%ExecuContr\L.PFC
+%DMN\L.LatP
+%Sensorimotor\L.M1

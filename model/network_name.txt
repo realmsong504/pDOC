@@ -1,0 +1,6 @@
+DMN
+ExecuContr
+Salience
+Sensorimotor
+Auditory
+Visual
