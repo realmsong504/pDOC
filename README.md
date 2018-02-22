@@ -12,5 +12,9 @@ We disclaim any warranty concerning its accuracy, timeliness, and completeness, 
 
 Prerequisite software:
 
-(1)Matlab 2010 or later
-(2)SPM8 or later
+(1) Matlab 2010 or later
+(2) SPM8 or later
+
+
+How to use:   
+Please refer to the enclosed "How_to_use.docx"
