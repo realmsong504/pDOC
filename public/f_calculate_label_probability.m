@@ -70,6 +70,15 @@ if(nargin<6)
         start_point = end_point;
     end
     awaken_ratio_array = awaken_count_array(:,2)./sum(awaken_count_array,2);
+    
+    b= isnan(awaken_ratio_array) ;
+    c=~b;
+    d =find(c,1,'last');
+    
+    for i=d: numel(awaken_ratio_array)
+        awaken_ratio_array(i) = 1;
+    end
+        
     tick_labels = msong_tick_labels(section);
     
     subplot(1,2,1);  hold on;
