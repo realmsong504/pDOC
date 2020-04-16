@@ -1,11 +1,15 @@
 function [tSNR_image] = msong_tSNR_image(f, mask_name)
 %  f:   3D fMRI file array or a 4D file
 % mask_name: brain_mask_file
+if(ischar(mask_name))
+    mask_hdr = spm_vol(mask_name);
+    file_img = spm_read_vols(mask_hdr);
+    mask_brain = file_img;
+    mask_brain = mask_brain>0;
+else
+    mask_brain = mask_name;
+end
 
-mask_hdr = spm_vol(mask_name);
-file_img = spm_read_vols(mask_hdr);
-mask_brain = file_img;
-mask_brain = mask_brain>0;
 
 n_fMRI = size(f,1);
 
@@ -72,27 +76,31 @@ for i = 1: numel(index)
     
     mean_S = mean(timecourse);
     sigma_N = std(timecourse);
-    
+    if(sigma_N ~=0)
     SNR = mean_S/sigma_N;
-  
+    else
+        SNR = 0;
+    end
+    
     tSNR_image( index(i) )=SNR;
     
 end
 clear TC_total;
 
-% save tSNR
-[fMRI_dir, subject_file] = fileparts(f(1,:));
-
-rst_dir = fullfile(fMRI_dir, 'tSNR');
-if(~exist(rst_dir,'dir'))
-    mkdir(rst_dir);
+if(ischar(mask_name))
+    % save tSNR
+    [fMRI_dir, subject_file] = fileparts(f(1,:));
+    
+    rst_dir = fullfile(fMRI_dir, 'tSNR');
+    if(~exist(rst_dir,'dir'))
+        mkdir(rst_dir);
+    end
+    
+    result_filename = sprintf('tSNR.nii');
+    tSNR_hdr = mask_hdr;
+    tSNR_hdr.fname = fullfile(rst_dir, result_filename);
+    tSNR_hdr.dt = [16 0]; % datatype: float32
+    spm_write_vol(tSNR_hdr, tSNR_image);
+    
 end
-
-result_filename = sprintf('tSNR.nii');
-tSNR_hdr = mask_hdr;
-tSNR_hdr.fname = fullfile(rst_dir, result_filename);
-tSNR_hdr.dt = [16 0]; % datatype: float32
-spm_write_vol(tSNR_hdr, tSNR_image);
-
-
 

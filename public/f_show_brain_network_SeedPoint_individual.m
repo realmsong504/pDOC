@@ -262,6 +262,21 @@ for i = 1: n_Tmap;
     end;    %%% The end of this for-loop
     
     %subplot(3,3,loop_counter+1);
+%     axes(ha(loop_counter+1));
+%     axis('image');  %%% Make the proportions of the image correct
+%     axis('off');    %%% Turn off the numbers on the x- and y-axes
+%     colormap hot;
+%     
+%     max_Tmap_value = max(Tmap(:));
+%     
+%     desired_colorbar_labels =floor(10*linspace(0, max_Tmap_value,5))/10;
+%     corresponding_values_on_0_to_1_scale = ...
+%         0 +  ( 1 * desired_colorbar_labels / max_Tmap_value );
+%     
+%     h = colorbar('location','west');   %%% h is the handle of the colorbar
+%     set(h, 'YLim', [0 1]);
+%     set(h,'YTick',corresponding_values_on_0_to_1_scale);
+%     set(h,'YTickLabel',desired_colorbar_labels);
     axes(ha(loop_counter+1));
     colormap hot;
     h = colorbar('location','west');   %%% h is the handle of the colorbar
@@ -276,7 +291,6 @@ for i = 1: n_Tmap;
     set(h,'YTickLabel',desired_colorbar_labels);
     axis('image');  %%% Make the proportions of the image correct
     axis('off');    %%% Turn off the numbers on the x- and y-axes
-
     
     ROI_name2 = strcat(ROI_name, '.jpg');
     %print(fig_Tmap,'-djpeg',fullfile(result_dir,ROI_name2));

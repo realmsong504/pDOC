@@ -1,0 +1,10 @@
+f_spm8batch_BB_EPI2fMRI_SC.m
+
+
+f_data_quality_evaluation.m   :  增加一个图显示mean fMRI图像
+
+
+f_prognostication_to_newSample.m 调用 f_calculate_label_probability.m : 增加一个框显示  mean fMRI 的 expected intersection
+
+增加public\msong_logistic.m, 增加 public\alpha_samples.txt, beta_samples.txt
+

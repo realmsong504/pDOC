@@ -191,10 +191,30 @@ while 1
     jobs{3}.spatial{4}.smooth.data = editfilenames(f,'prefix','ra');
     jobs{3}.spatial{4}.smooth.fwhm = [6 6 6];
     
+    %% coreg EPI to mean fMRI:  20180910
+    jobs{4}.spatial{1}.coreg{1}.estwrite.ref = editfilenames(f(1,:),'prefix','meana');
+    jobs{4}.spatial{1}.coreg{1}.estwrite.source = cellstr(f_EPI);
+    jobs{4}.spatial{1}.coreg{1}.estwrite.other = cellstr(f_mask);
+    jobs{4}.spatial{1}.coreg{1}.estwrite.eoptions.cost_fun = 'nmi';
+    jobs{4}.spatial{1}.coreg{1}.estwrite.eoptions.sep = [4 2];
+    jobs{4}.spatial{1}.coreg{1}.estwrite.eoptions.tol = [0.02 0.02 0.02 0.001 0.001 0.001 0.01 0.01 0.01 0.001 0.001 0.001];
+    jobs{4}.spatial{1}.coreg{1}.estwrite.eoptions.fwhm = [7 7];
+    jobs{4}.spatial{1}.coreg{1}.estwrite.roptions.interp = 0;
+    jobs{4}.spatial{1}.coreg{1}.estwrite.roptions.wrap = [0 0 0];
+    jobs{4}.spatial{1}.coreg{1}.estwrite.roptions.mask = 0;
+    jobs{4}.spatial{1}.coreg{1}.estwrite.roptions.prefix = 'r';
+    
     %% RUN JOBS
     %save('DOC.mat','jobs');
     %spm_jobman('interactive',jobs); % open a GUI containing all the setup
     spm_jobman('run',jobs);        % execute the batch
+    
+    %% compute the overlay ratio for wmaskEPI_V2mm_float32.nii and rmaskEPI_V2mm_float32.nii
+    wmask_file = char(editfilenames(f_mask,'prefix','w'));
+    rmask_file = char(editfilenames(f_mask,'prefix','r'));
+    [ratio_intersection] = msong_calculate_intersection(wmask_file, rmask_file);
+    fprintf('intersection between mask & brain: %4.3f\n', ratio_intersection);
+    
 
     %% remove whole brain and head motion
     fprintf('removing the head motion and whole brain mean.\n');

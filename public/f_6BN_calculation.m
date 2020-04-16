@@ -166,6 +166,9 @@ while 1
     result_mat = fullfile(result_directory, sprintf('%s_ROI%d.mat', subject_name,n_ROI_file));
     save(result_mat, 'ROI_signal');
     
+    ROI_file_mat = fullfile(result_directory, sprintf('%s_ROI%d_filename.mat', subject_name,n_ROI_file));
+    save(ROI_file_mat, 'ROI_file');
+    
     %% show ROI overlay result
     if(output_parameter == 2)
         G = cell(total_n_ROI_file,1);

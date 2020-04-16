@@ -6,7 +6,10 @@ function [label_probabiltiy]=f_prognostication_to_newSample(subject_list_file)
 
 %%
 new_sample_filelist_str = subject_list_file;
-all_test_subject_name = importdata(new_sample_filelist_str);
+fid = fopen(new_sample_filelist_str);
+all_test_subject_name = textscan(fid, '%s');  % 2020-0224
+%all_test_subject_name = textscan(new_sample_filelist_str, '%s');  % 2020-0224
+%all_test_subject_name = (all_test_subject_name));
 new_sample_directory = fileparts(new_sample_filelist_str);
 
 method_type = 'PearsonCorr_absT10';
@@ -79,7 +82,6 @@ p = msong_PLS_PermutationTest(X, y, yfit_all(ncomp2+1,:)', n_permutation);
 %% use the model from 750 to NEW SAMPLE to predict prognosis
 %
 fprintf('load NEW sample...\n');
-
 subject_directory = fullfile(new_sample_directory,  deblank(char(all_test_subject_name{1})));
 clinical_characteristics_path = fullfile(subject_directory, 'clinical_characteristics.txt');
 
@@ -166,6 +168,14 @@ end
 patient_feature = X_HDX;
 
 yfit_HDX = [ones(size(X_HDX2,1),1) X_HDX2]*beta;
+yfit_intercept = beta(1);
+yfit_image = X_HDX2(1:5)*beta(2:6);
+yfit_clinical = X_HDX2(6:9)*beta(7:10);
+
+yfit_HDX_v = [yfit_HDX;yfit_intercept;yfit_image;yfit_clinical];
+
+fprintf('predicted total score = interception + imaging_score + clinical_score \n');
+fprintf('\t\t %3.2f = (%3.2f) + (%3.2f) + (%3.2f)\n',yfit_HDX, yfit_intercept, yfit_image, yfit_clinical);
 
 %% print patient's raw features and  NC 
 NC_feature_file = fullfile(program_dir, 'model', 'NC_imaging_feature.mat');
@@ -176,6 +186,6 @@ X_NC_HDX  = X_HDX;
 f_show_patient_features(subject_list_file, patient_feature, X_NC_750,variable_name);
 
 %%  calculate the possibility
-[label_probabiltiy] = f_calculate_label_probability(subject_list_file, yfit_HDX, yfit_all(ncomp2+1,:)', GOS, 2);
+[label_probabiltiy] = f_calculate_label_probability(subject_list_file, yfit_HDX_v, yfit_all(ncomp2+1,:)', GOS, 2);
 
 
