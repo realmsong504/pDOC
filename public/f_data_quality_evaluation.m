@@ -97,7 +97,12 @@ show_z = ceil(sqrt(z_mean_fMRI));
 max_row = 4;
 max_column = 1;
 gap = 5;
-initial_axial_slice_number=10;
+
+initial_axial_slice_number= z_mean_fMRI - max_row*gap - 1;
+if(initial_axial_slice_number<0)
+    initial_axial_slice_number = 1;
+    gap = 3;
+end
 
 
 mean_fMRI_map = spm_read_vols(mean_fMRI_hdr);
