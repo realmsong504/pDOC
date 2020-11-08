@@ -209,6 +209,7 @@ for i = 1: n_Tmap;
     Tmap_hdr = spm_vol(Tmap_file);
     Tmap = spm_read_vols(Tmap_hdr);
     Tmap = rot90_3D( Tmap, 3,3 );
+    Tmap(isinf(Tmap)) = 0;  % 2020/11/8, msong
     thresholded_Tmap = ( Tmap > T_threshold ) .* Tmap;
     Tmap01 = thresholded_Tmap ./ max(thresholded_Tmap(:));
     Tmap0_63 = round( 63 * Tmap01 );
