@@ -118,8 +118,14 @@ switch n_label
                 X_i2 = [X_i(1,1) X_i X_i(1,1)];  % msong
                 [CordX,CordY] = pol2cart(Angle,X_i2');
                 h2 = plot(CordX,CordY,colors(s_index),'LineWidth',3);
-            end            
-            legend([h1, h2], 'Location','SouthEastOutside', 'Normal controls', subject_name);
+            end
+            [v d] = version;
+            version_flag = str2double(v(end-5:end-2));
+            if(version_flag>2016)
+                legend([h1, h2], 'Normal controls', subject_name, 'Location','SouthEastOutside');
+            else
+                legend([h1, h2], 'Location','SouthEastOutside', 'Normal controls', subject_name);
+            end
         end
         
     case 3
