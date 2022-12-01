@@ -67,12 +67,22 @@ while 1
         error('fMRI directory: %s does not exist.', fMRI_directory);
     end
     
-    % DELETE the first 5 frames
     work_dir= strtrim(fMRI_directory);
     cd(work_dir);
     
+    %% change fMRI filename
+    fMRI_file = spm_select('FPList', work_dir,  '.*\.nii$');
+    for i =1: size(fMRI_file,1)
+        rmean_map_hdr = spm_vol(fMRI_file(i,:));
+        rmean_map = spm_read_vols(rmean_map_hdr);
+        mask_hdr = rmean_map_hdr;
+        fname_prefix = char(editfilenames(fMRI_file(i,:),'prefix', 'pDOC_'));
+        mask_hdr.fname = char(editfilenames(fname_prefix,'suffix', sprintf('_%03d',i)));
+        spm_write_vol(mask_hdr, rmean_map);
+    end    
+    
     %% change Bounding box
-   fMRI_file = spm_select('FPList', work_dir,  '.*\.nii$') ;
+    fMRI_file = spm_select('FPList', work_dir,  '^pDOC_.*\.nii$') ;
     for i =1: size(fMRI_file,1)
         rmean_map_hdr = spm_vol(fMRI_file(i,:));
         rmean_map = spm_read_vols(rmean_map_hdr);
@@ -91,26 +101,28 @@ while 1
         spm_write_vol(mask_hdr, rmean_map);
     end
     
-    %% delete 
+    %% DELETE the first 5 frames
     %fprintf('checking & deleting the 5 %s analysis file\n',tline);
-    
-    filename_1 = spm_select('FPList', work_dir,  '^bb.*_001\.nii$') ;
+    filename_1ist_bb_pDOC = spm_select('FPList', work_dir,  '^bb_pDOC.*\.nii$') ;
+    filename_1 = filename_1ist_bb_pDOC(1,:);
     if(size(filename_1, 1)>0)
         f1_hdr = spm_vol(filename_1);
         img_dim = f1_hdr.dim;
         n_slices = img_dim(3);
-        [temp, filename_1] = fileparts(filename_1);
-        length_filename_1 = length(filename_1);
-        prefix = filename_1(1:length_filename_1-4);
+%         [temp, filename_1] = fileparts(filename_1);
+%         length_filename_1 = length(filename_1);
+%         prefix = filename_1(1:length_filename_1-4);
         for k=1:5
-            temp_file=sprintf('%s_%.3d.*',prefix,k);
+            temp_file=filename_1ist_bb_pDOC(k,:);
             delete(temp_file);
         end
     else
-        filename_1 = spm_select('FPList', work_dir,  '^bb.*_006\.nii$') ;
-        f1_hdr = spm_vol(filename_1);
-        img_dim = f1_hdr.dim;
-        n_slices = img_dim(3);
+        filename_1 = spm_select('FPList', work_dir,  '^bb_pDOC.*_006\.nii$');
+        if(size(filename_1,1)>0)
+            f1_hdr = spm_vol(filename_1);
+            img_dim = f1_hdr.dim;
+            n_slices = img_dim(3);
+        end
     end
     
     %% copy standard EPI
@@ -126,7 +138,7 @@ while 1
     clear jobs;
     jobs{1}.util{1}.cdir.directory = cellstr(work_dir);  % spm8
         
-    f = spm_select('FPList', work_dir,  '^bb.*\.nii$') ;
+    f = spm_select('FPList', work_dir,  '^bb_pDOC.*\.nii$') ;
     f_EPI = spm_select('FPList', EPI_directory,  '^EPI.*\.nii$') ;
     f_7BN = spm_select('FPList', EPI_directory,  '^winner_7.*\.nii$') ;
     f_mask = spm_select('FPList', EPI_directory,  '^maskEPI_V2mm_float32.*\.nii$') ;
