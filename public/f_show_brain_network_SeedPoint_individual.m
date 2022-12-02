@@ -288,8 +288,10 @@ for i = 1: n_Tmap;
     corresponding_values_on_1_to_64_scale = ...
         1 +  ( 63 * desired_colorbar_labels / max_Tmap_value );
     desired_colorbar_labels = roundn(desired_colorbar_labels,-2);
-    set(h,'YTick',corresponding_values_on_1_to_64_scale);
-    set(h,'YTickLabel',desired_colorbar_labels);
+    set(h,'YTick',corresponding_values_on_1_to_64_scale/64);
+    %yticklabels(cellstr(string(desired_colorbar_labels)));
+    set(h,'YTickLabel',cellstr(string(desired_colorbar_labels)));
+    %set(h,'YTickLabel',desired_colorbar_labels);
     axis('image');  %%% Make the proportions of the image correct
     axis('off');    %%% Turn off the numbers on the x- and y-axes
     
