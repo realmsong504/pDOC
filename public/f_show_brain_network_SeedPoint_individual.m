@@ -297,6 +297,6 @@ for i = 1: n_Tmap;
     
     ROI_name2 = strcat(ROI_name, '.jpg');
     %print(fig_Tmap,'-djpeg',fullfile(result_dir,ROI_name2));
-    export_fig(fullfile(result_dir,ROI_name2));
+    export_fig(fullfile(result_dir,ROI_name2)); 
     
 end
