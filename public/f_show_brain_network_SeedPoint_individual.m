@@ -234,7 +234,7 @@ for i = 1: n_Tmap;
         
     end;  % End of loop through the RGB dimension.
     
-    Tmap_opacity = 1;     % 0.4 is a reasonable opacity value to try first
+    Tmap_opacity = 0.4;     % 0.4 is a reasonable opacity value to try first
     
     compound_RGB = zeros(size(anat64,1), size(anat64,2), size(anat64,3),3);
     
@@ -284,9 +284,9 @@ for i = 1: n_Tmap;
     
     max_Tmap_value = max(Tmap(:));
     
-    desired_colorbar_labels =linspace(0, max_Tmap_value,5);
+    desired_colorbar_labels =linspace(T_threshold, max_Tmap_value,5);
     corresponding_values_on_1_to_64_scale = ...
-        1 +  ( 63 * desired_colorbar_labels / max_Tmap_value );
+        1 +  ( 63 * linspace(0, max_Tmap_value,5) / max_Tmap_value );
     desired_colorbar_labels = roundn(desired_colorbar_labels,-2);
     set(h,'YTick',corresponding_values_on_1_to_64_scale/64);
     %yticklabels(cellstr(string(desired_colorbar_labels)));
