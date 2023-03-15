@@ -47,17 +47,22 @@ while 1
     
     [BOLD_directory] = msong_select_subdirectory('subdir', NC_subject_directory,  '^BOLD.*');
     [BOLD_directory2] = msong_select_subdirectory('subdir', NC_subject_directory,  '^fMRI.*');
+    [BOLD_directory3] = msong_select_subdirectory('subdir', NC_subject_directory,  '^fmri.*');
     if(size(BOLD_directory, 1)>0)
         NC_fMRI_directory = deblank(BOLD_directory(1,:));
     end
     if(size(BOLD_directory2, 1)>0)
         NC_fMRI_directory = deblank(BOLD_directory2(1,:));
     end
+    if(size(BOLD_directory3, 1)>0)
+        NC_fMRI_directory = deblank(BOLD_directory3(1,:));
+    end
     
     if(~exist(NC_fMRI_directory, 'dir'))
         fprintf('fMRI directory: %s does not exist. \n', NC_fMRI_directory)
         error('error');
     end
+    
     work_dir= strtrim(NC_fMRI_directory);
     result_directory = fullfile(work_dir, 'ROI_signal');
     if(~exist(result_directory,'dir'))
