@@ -122,9 +122,9 @@ switch n_label
             [v d] = version;
             version_flag = str2double(v(end-5:end-2));
             if(version_flag>2016)
-                legend([h1, h2], 'Normal controls', subject_name, 'Location','SouthEastOutside');
+                legend([h1, h2], 'Normal controls', subject_name, 'Location','SouthEastOutside', 'Interpreter', 'none');
             else
-                legend([h1, h2], 'Location','SouthEastOutside', 'Normal controls', subject_name);
+                legend([h1, h2], 'Location','SouthEastOutside', 'Normal controls', subject_name, 'Interpreter', 'none');
             end
         end
         
@@ -188,7 +188,7 @@ switch n_label
             h4 = plot(CordX,CordY,colors(s_index),'LineWidth',3);
         end
      
-        legend([h1, h2, h3, h4], 'VS patients', 'MCS patients', 'Normal controls', subject_name);
+        legend([h1, h2, h3, h4], 'VS patients', 'MCS patients', 'Normal controls', subject_name, 'Interpreter', 'none');
 
 end
 

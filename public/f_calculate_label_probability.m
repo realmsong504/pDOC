@@ -176,7 +176,7 @@ if(nargin<6)
     subplot(4,3,[2 3]);  hold on;
     text_descend = 0.15;
     axis off;
-    text(0,1-text_descend,  sprintf('Patient name : %s', subject_name),'FontSize',12);
+    text(0,1-text_descend,  sprintf('Patient name : %s', subject_name),'FontSize',12, 'Interpreter', 'none');
     clinical_characteristics_path = fullfile(subject_directory, 'clinical_characteristics.txt');
     [age, duration, etiology] = f_read_clinical_characteristics(clinical_characteristics_path);
     switch etiology
@@ -370,6 +370,8 @@ if(nargin<6)
     
     label_probabiltiy(1) = 1;  % recovery
     label_probabiltiy(2) = p_a_mean;
+    label_probabiltiy(3) = yfit_image; % image score
+    label_probabiltiy(4) = yfit_clinical; % clinical score
     
     print(fig6, '-djpeg',fullfile(result_dir,  'prognostication_result'));
     

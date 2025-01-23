@@ -59,6 +59,8 @@ f_show_brain_network_SeedPoint_individual(subject_list_file, 1);   % 1: DMN
 fprintf(log_fid, '******\r\n');
 fprintf(log_fid, 'Predicted result\r\n');
 fprintf(log_fid, '\t probability_of_consciousness_recovery:%4.2f\r\n', label_probability(2));
+fprintf(log_fid, '\t image_score:%4.2f\r\n', label_probability(3));
+fprintf(log_fid, '\t clinical_score:%4.2f\r\n', label_probability(4));
 
 % close log fid
 fclose(log_fid);

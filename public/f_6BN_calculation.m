@@ -191,7 +191,10 @@ while 1
         xlabel('');
         ylabel('Overlay ratio');
         ylim([-1 1]) ;
-        title(strcat( subject_no,' : scatter plots for each brain network'));
+        
+        t = title(strcat( subject_no,' : scatter plots for each brain network'));
+        set(t,'Interpreter','none');
+        
         set(gca,'Xtick',1:numel(network_name),'XTickLabel', network_name);
         dashline([0:0.1:numel(network_name)], ones(size([0:0.1:numel(network_name)]))*0, 1,1,1,1, 'color',[.75 .75 .75]);
         dashline([0:0.1:numel(network_name)], ones(size([0:0.1:numel(network_name)]))*0.2, 1,1,1,1, 'color',[.75 .75 .75]);

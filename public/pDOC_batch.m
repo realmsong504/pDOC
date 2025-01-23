@@ -3,11 +3,12 @@
 clear all;
 clc;
 
-% public_dir = pwd;
-% addpath(public_dir);
+public_dir = pwd;
+addpath(public_dir);
+addpath('K:\work\2017_DOC_0_prognosis\pDOC\20230315\pDOC');
 
-subject_directory='K:\beizong\20180730_DOC\test';
-subject_filename = 'subject_batch.txt';
+subject_directory='Z:\anesthesia_tiantan\program';
+subject_filename = 'subject_list_info_2020.txt';
 
 [temp, log_name] = fileparts(subject_filename);
 log_file = sprintf('log_%s.txt', log_name);
@@ -58,6 +59,7 @@ for i =1: n_subject_prognosis
     else
         % only using clinical characteristics
         pDOC_warning();
+        
         f_DOC_prognosication_clinical(patient_etiology, patient_incidence_age, patient_duration_of_DOC);
         
     end

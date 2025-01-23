@@ -41,7 +41,8 @@ colors = {...
     'g';...
     'c'};
 subplot(4,4,1:4);grid; hold on;
-title(strcat( subject_name,' : head motion'));
+t = title(strcat( subject_name,' : head motion'));
+set(t,'Interpreter','none');
 
 xlim([1 T+1]);
 for i = 1:6
@@ -285,7 +286,9 @@ end
 gscatter(N,M2,N);  hold on;
 xlabel('');
 ylabel('tSNR');
-title(strcat( subject_name,' : tSNR'));
+t = title(strcat( subject_name,' : tSNR'));
+set(t,'Interpreter','none');
+
 set(gca,'Xtick',1:numel(network_name_total),'XTickLabel', network_name_total);
 
 
