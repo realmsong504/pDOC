@@ -156,7 +156,7 @@ while 1
         ROI_file = strvcat(ROI_file,temp);
     end
     n_ROI_file = size(ROI_file,1);
-    fMRI_4D_path = fullfile(fMRI_4D_directory, strcat('BP_rhmw_', subject_name,'.nii'));
+    fMRI_4D_path = spm_select('FPList',fMRI_4D_directory, '^BP_.*\.nii$');%fullfile(fMRI_4D_directory, strcat('BP_rhmw_', subject_name,'.nii'));
     [ROI_signal] = f_ExtractMultipleROISingal_4D(ROI_file, fMRI_4D_path);
     
     result_directory = fullfile(work_dir, 'ROI_signal');

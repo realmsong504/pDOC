@@ -15,10 +15,10 @@ n_fMRI = size(f,1);
 
 if(n_fMRI==1)
     % 4D file
-    fMRI_file_hdr = spm_vol(fMRI_4D_file);
+    fMRI_file_hdr = spm_vol(f(1,:));
     TC_total = spm_read_vols(fMRI_file_hdr);
     volumesize = fMRI_file_hdr(1,1).dim;
-    T  = size(fMRI_file_img,4);
+    T  = size(TC_total,4);
 else
     % 3D file array
     T = n_fMRI;

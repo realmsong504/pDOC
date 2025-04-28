@@ -234,6 +234,10 @@ if(~exist(tSNR_dir, 'dir'))  % not exist
     if(size(f,1)==0)
         f = spm_select('FPList', fMRI_directory,  sprintf('^%s.*\\.nii$', upper(subject_name))) ;
     end
+    if(size(f,1)==0)
+        afni_directory = fullfile(fMRI_directory,'afni');
+        f = spm_select('FPList', afni_directory,  '^BP_.*\.nii$') ;
+    end
     
     [tSNR_image] = msong_tSNR_image(f, brain_mask_file);
     
