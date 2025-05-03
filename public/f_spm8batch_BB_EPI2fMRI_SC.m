@@ -140,7 +140,7 @@ while 1
         
     f = spm_select('FPList', work_dir,  '^bb_pDOC.*\.nii$') ;
     f_EPI = spm_select('FPList', EPI_directory,  '^EPI.*\.nii$') ;
-    f_7BN = spm_select('FPList', EPI_directory,  '^winner_7.*\.nii$') ;
+    f_aMPFC = spm_select('FPList', EPI_directory,  '^aMPFC.*\.nii$') ;
     f_mask = spm_select('FPList', EPI_directory,  '^maskEPI_V2mm_float32.*\.nii$') ;
     
     %% SLICE TIMING
@@ -169,7 +169,7 @@ while 1
     %% NORMALIZE Estimate & write to EPI and brainnetwork
     %--------------------------------------------------------------------------
     jobs{3}.spatial{2}.normalise{1}.estwrite.subj.source = cellstr(f_EPI);
-    jobs{3}.spatial{2}.normalise{1}.estwrite.subj.resample = [cellstr(f_EPI); cellstr(f_mask); cellstr(f_7BN)];
+    jobs{3}.spatial{2}.normalise{1}.estwrite.subj.resample = [cellstr(f_EPI); cellstr(f_mask); cellstr(f_aMPFC)];
     jobs{3}.spatial{2}.normalise{1}.estwrite.eoptions.template = editfilenames(f(1,:),'prefix','meana');
     jobs{3}.spatial{2}.normalise{1}.estwrite.roptions.preserve = 0;
     jobs{3}.spatial{2}.normalise{1}.estwrite.roptions.bb = BB;
