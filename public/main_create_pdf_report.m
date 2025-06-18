@@ -1,7 +1,7 @@
 clear;
 close all;
 
-subject_directory = 'Z:\DOC_MRI_tieying\20250423\hanshuai\analysis';
+subject_directory = 'Z:\DOC_MRI_dongruan\20250509_zhang_junshan\analysis\zhang_junshan_individual';
 % [BOLD_directory] = msong_select_subdirectory('subdir', subject_directory,  '^0.*');
 BOLD_directory = subject_directory;
 

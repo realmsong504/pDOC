@@ -122,9 +122,9 @@ switch n_label
             [v d] = version;
             version_flag = str2double(v(end-5:end-2));
             if(version_flag>2016)
-                legend([h1, h2], 'Normal controls', subject_name, 'Location','SouthEastOutside', 'Interpreter', 'none');
+                legend([h1, h2], {'Normal controls', subject_name}, 'Location','SouthEastOutside', 'Interpreter', 'none');
             else
-                legend([h1, h2], 'Location','SouthEastOutside', 'Normal controls', subject_name, 'Interpreter', 'none');
+                legend([h1, h2], {'Normal controls', subject_name}, 'Location','SouthEastOutside', 'Interpreter', 'none');
             end
         end
         
