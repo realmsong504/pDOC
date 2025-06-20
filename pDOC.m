@@ -22,7 +22,7 @@ function varargout = pDOC(varargin)
 
 % Edit the above text to modify the response to help pDOC
 
-% Last Modified by GUIDE v2.5 03-Feb-2018 16:43:38
+% Last Modified by GUIDE v2.5 19-Jun-2025 16:46:24
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -154,11 +154,18 @@ if (get(hObject,'Value') == get(hObject,'Max'))
     set(handles.pb_choose_fMRI_directory,'Enable','on');
     set(handles.e_rsfMRI_directory,'Enable','on');
     set(handles.e_rsfMRI_directory,'String','Please choose or input ...');
+    
+    set(handles.radiobutton1,'Enable','on');
+    set(handles.radiobutton1,'Value',0);
+    
 else
     % Checkbox is not checked-take approriate action
     set(handles.pb_choose_fMRI_directory,'Enable','inactive');
     set(handles.e_rsfMRI_directory,'String','NULL');
     set(handles.e_rsfMRI_directory,'Enable','inactive');
+    
+    set(handles.radiobutton1,'Enable','inactive');
+    set(handles.radiobutton1,'Value',0);
 end
 
 
@@ -175,6 +182,14 @@ else
     flag_using_fMRI = 0;
 end
 
+if(get(handles.radiobutton1, 'Value') == get(handles.radiobutton1, 'Max'))
+    % radiobutton：using individual_ROI
+    flag_individual_ROI = 1;
+else
+    % using fixed_ROI
+    flag_individual_ROI = 0;
+end
+
 patient_etiology_all = get(handles.pm_etiology,'String');
 patient_etiology_value = get(handles.pm_etiology,'Value');
 patient_etiology = char(patient_etiology_all{patient_etiology_value});
@@ -184,8 +199,10 @@ patient_duration_of_DOC = str2double(get(handles.e_duration,'String'));
 program_location = which('pDOC');
 [program_dir] = fileparts(program_location);
 public_function_dir = fullfile(program_dir, 'public');
+program_dir_public_ind = fullfile(public_function_dir, 'individual_ROI');
 if(exist(public_function_dir, 'dir'))
     addpath(public_function_dir);
+    addpath(program_dir_public_ind);
 else
     error('public function does not exist.');
 end
@@ -193,8 +210,20 @@ end
 if (flag_using_fMRI == 1)
     patient_directory = get(handles.e_rsfMRI_directory,'String');
     if(exist(patient_directory,'dir'))
-    f_DOC_prognosication_rsfMRI_clinical(patient_directory,...
-        patient_etiology, patient_incidence_age, patient_duration_of_DOC);
+        if (flag_individual_ROI == 0)
+            % using fixed_ROI
+            f_DOC_prognosication_rsfMRI_clinical(patient_directory,...
+                patient_etiology, patient_incidence_age, patient_duration_of_DOC);
+        else
+            % using individual_ROI
+            f_DOC_prognosication_rsfMRI_clinical(patient_directory,...
+                patient_etiology, patient_incidence_age, patient_duration_of_DOC);
+            
+            fprintf('\n');
+            fprintf('*********** individual_ROI **************\n');
+            f_pDOC_prognosication_using_individual_aMPFC_DMPFC(patient_directory);
+            
+        end
     else
         pDOC_warning();
     end
@@ -207,8 +236,6 @@ else
     setappdata(0,'patient_duration_of_DOC',patient_duration_of_DOC);  
     
     f_DOC_prognosication_clinical(patient_etiology, patient_incidence_age, patient_duration_of_DOC);
-
-
 
 end
 
@@ -266,3 +293,12 @@ function cb_rsfMRI_CreateFcn(hObject, eventdata, handles)
 % hObject    handle to cb_rsfMRI (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    empty - handles not created until after all CreateFcns called
+
+
+% --- Executes on button press in radiobutton1.
+function radiobutton1_Callback(hObject, eventdata, handles)
+% hObject    handle to radiobutton1 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hint: get(hObject,'Value') returns toggle state of radiobutton1
