@@ -48,7 +48,7 @@ We make no warranties, express or implied, regarding the accuracy, completeness,
 
 ## Prerequisite Software
 
-- **MATLAB** (version 2010 or later)  
+- **MATLAB** (version 2020 or later)  
 - **SPM8** or later  
 - **3D nii NIfTI format support** for fMRI data  
 
