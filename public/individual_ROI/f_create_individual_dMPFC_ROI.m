@@ -1,10 +1,6 @@
 function [] = f_create_individual_dMPFC_ROI(work_dir, target_dir)
-%% work_dir: Z:\DOC_MRI_dongruan\20250409\zhangxiuhong\analysis\TR2\fMRI
-%  target_dir: 'fMRI_2' or a new directory Z:\zhangxiuhong\analysis\
-%clear;
-%clc;
 
-addpath('K:\work\2017_DOC_0_prognosis\pDOC\20230315\pDOC\public');
+%addpath('K:\work\2017_DOC_0_prognosis\pDOC\20230315\pDOC\public');
 
 if(nargin<2)
     target_dir2 = fileparts(work_dir); % TR2
@@ -67,20 +63,9 @@ new_ROI_img(xRange, yRange, zRange) = 1;
 
 new_ROI_img = new_ROI_img.*(wDMN_PCC_map>0).*wExecuContr_T10_map;
 
-% %% rename w01_DMPFC
-% oldName = w01_DMPFC(1,:);
-% [pathStr, name, ext] = fileparts(oldName);
-% newName = fullfile(pathStr, ['0_', name, ext]);
-% 
-% % 重命名文件
-% status = copyfile(oldName, newName);
-% 
-% % 检查是否成功
-% if status
-%     fprintf('DMPFC rename：%s\n', newName);
-% else
-%     error('Fail to rename DMPFC in f_create_individual_DMPFC_ROI.m\n');
-% end
+if(max(new_ROI_img(:))==0)
+    new_ROI_img = w01_DMPFC_map;
+end
 
 %% write individual DMPFC ROI file
 new_w01_DMPFC_hdr = w01_DMPFC_hdr;
